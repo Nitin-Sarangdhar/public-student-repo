@@ -1,0 +1,3 @@
+New readme file at a directory level. Source files are checked in the appropriate directory structure
+Uses npm and vite development environment for this react project
+Project was tested using Chrome and Edge Browsers
