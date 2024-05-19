@@ -1,0 +1,19 @@
+{
+    "name": "HeartSeven",
+    "version": "1.0.0",
+    "description": "Cardgame HeartSeven ",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "socket.io": "^4.7.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.14"
+    }
+}
