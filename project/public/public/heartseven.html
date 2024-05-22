@@ -205,7 +205,7 @@
     <button class="button p1card1" id="redeal-button" onclick="disableButton(this, '65')">Deal</button>
     <button class="button p1card2" id="updateAllCards" onclick="disableButton(this, '0')">Play</button>
     <button class="button p1card3" id="backConfiguration" onclick="disableButton(this, '70')"> Cfg</button>
-    <button class="button p1card8" id="help-button">Help</button>
+    <button class="button p1card8" id="helpbutton"> Help</button>
     <div id="help-message" style="max-width: 200px;">
 <!--        <p>The object of the game is to finish all cards in a player's hand. 
            The first card allowed to be played is 7♥. A new suit is allowed 
@@ -219,12 +219,23 @@
     </div>
     <div id="message-container"></div>
   </div>
-  <audio id="sound" controls>
+  <audio id="sound">
     <source src="/audio.mp3" type="audio/mpeg">
   </audio>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
   <script>
+    // Get the values of specific parameters from the previous page
+    // const param1 = urlParams.get("param1");   // demo = 0; single = 1; multi start = 2; multi join = 3
+    // const param2 = urlParams.get("param2");   // tableIndex
+    // const param3 = urlParams.get("param3");   // Playername
+    // const param4 = urlParams.get("param4");   // PlayerCount Min = 0, Max = 3
+    // temporary definition
+    const param1 = 0; 
+    const param2 = 0;
+    const param3 = 0; 
+    const requestTableIndex = param2;
+    let myVariable = 0;
     const substitutionMap = {
     0: "B",
     1: "A♠",
@@ -298,9 +309,9 @@
   // const cardsUrl = baseUrl + `/cards`;
   // const updateCardsUrl = baseUrl + `/update_all_cards/${requestTableIndex}`;
   const baseUrl = runningLocally ? 'http://localhost:3000' : 'https://zpekpk8jsx.us-east-2.awsapprunner.com';
-  const cardsUrl = baseUrl + `api/cards`;
-  const updateCardsUrl = baseUrl + `api/update_all_cards/${requestTableIndex}`;
-
+  const cardsUrl = baseUrl + `/api/cards`;
+  const updateCardsUrl = `${baseUrl}/api/update_all_cards`
+  const trialPostUrl = `${baseUrl}/api/trialpost`;
   function disableButton(button, data) {
     // Disable the button to prevent double-clicking
        var myCurrentPolicy = 0;  // Corrected the variable name to match the one used later
@@ -341,7 +352,9 @@
               }
 
               // Perform your action here (e.g., updateAllCards)
-              fetchData(param2, data);
+              console.log("Deal button clicked", newdata);
+              
+              
        }
     // Re-enable the button after a delay (e.g., 2 seconds)
     setTimeout(() => {
@@ -350,61 +363,147 @@
     }
 
     // Add a click event listener to the "Help" button
-    helpButton.addEventListener('click', toggleHelpMessage);
+  //  helpButton.addEventListener('click', toggleHelpMessage);
+
+  function fetchData4() {
+    // Send the button click event to the server
+    fetch(`${trialPostUrl}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}), // Empty body
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response data
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }
 
 
+
+  function fetchData3() {
+    fetch('/api/trial')
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error fetching data:', error));
+  }
+
+  function fetchData1() {
+            fetch('/api/data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Trial request successful:', data);
+                    alert('Trial request successful. Check console for response.');
+                })
+                .catch(error => {
+                    console.error('Error making trial request:', error);
+                    alert('Error making trial request. Check console for details.');
+                });
+        }
 
   function fetchData(requestTableIndex, buttonId) {
-//        fetch('http://127.0.0.1:5000/cards') // Adjust the URL to your Flask server
-//        fetch('http://192.168.0.21:8080/cards') // Adjust the URL to your Flask server
-        const data = {
-          action: 'buttonClick',
-          buttonId: buttonId,
-         // Other relevant data...
-        }; 
-        // Send the button click event to the server
-        fetch(updateCardsUrl, {
-        //        fetch('http://192.168.0.21:5000/update_all_cards',  { // Adjust the URL to your Flask server
-        //        fetch('http://127.0.0.1:5000/update_all_cards', {
-           method: 'POST',
-           headers: {
-           'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(data),
-        })
+    const data = {
+        action: 'buttonClick',
+        buttonId: buttonId,
+    };
 
+    // Log the request going out, including the buttonId
+    console.log('Sending request to:', `${updateCardsUrl}/${requestTableIndex}`, 'with buttonId:', buttonId);
 
+    // Send the button click event to the server
+    fetch(`${updateCardsUrl}/${requestTableIndex}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Extract table_index and card_data from the response data
+        const tableIndex = data.table_index;
+        const carddata = data.card_data;
+        return carddata;
 
-      // fetch(cardsUrl/${requestTableIndex})
-        .then(response => response.json())
-        .then(data => {
-          // Extract table_index and table_cards from the response data
-          
-          // The rest of your Socket.IO client-side code goes here
-          socket.on('connect', function() {
-          console.log('Connected to the server');
-          });
-          const tableIndex = data.table_index;
-          const carddata = data.card_data;
+        // Use the extracted data as needed
+        console.log("Table Index:", tableIndex, requestTableIndex);
+        console.log("Table Cards:", carddata);
 
-          // Use the extracted data as needed
-          console.log("Table Index:", tableIndex, requestTableIndex);
-          console.log("Table Cards:", carddata);
-          if (requestTableIndex == tableIndex) {
-          // Array of card content for player 1
-          console.log("Table Index1:", tableIndex, requestTableIndex);
-          tableKeeping(requestTableIndex, carddata);
-          // You can also update the HTML content with the data, e.g., display the cards
-          //document.getElementById('cardData').innerHTML = `
-          //<p>Table Index: ${tableIndex}</p>
-          //<p>Table Cards: ${JSON.stringify(tableCards)}</p>
-          //          `;
+        if (requestTableIndex == tableIndex) {
+            // Array of card content for player 1
+            console.log("Table Index1:", tableIndex, requestTableIndex);
+            tableKeeping(requestTableIndex, carddata);
+            // You can also update the HTML content with the data, e.g., display the cards
+            // document.getElementById('cardData').innerHTML = `
+            // <p>Table Index: ${tableIndex}</p>
+            // <p>Table Cards: ${JSON.stringify(tableCards)}</p>
+            // `;
         }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-        };
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+
+
+
+function tableKeeping(requestTableIndex, carddata) {
+    // Example function to handle card data
+    console.log(`Table ${requestTableIndex} cards:`, carddata);
+}
+
+// Connect to the server
+const socket = io.connect(baseUrl);
+// Listen for the connect event
+
+socket.on('connect', () => {
+    console.log('Connected to WebSocket');
+});
+
+// Listen for the disconnect event
+socket.on('disconnect', () => {
+    console.log('Disconnected from WebSocket');
+});
+
+
+//socket.on('update_all_cards', (data) => {
+    // Handle the received data, including card_data and table_index
+//    const expectedTableIndex = param2;
+//    const receivedCardData = data.card_data;
+//    const receivedTableIndex = data.table_index;
+//    console.log ('received_update_data from Websocket');
+    // Check if the received table_index matches the client's expected value
+//    if (receivedTableIndex == expectedTableIndex) {
+        // Perform the update with receivedCardData
+//        console.log ('received_update_data from Websocket inside If');
+//        player1Heading.textContent = data.table_names[0];    
+//        player2Heading.textContent = data.table_names[1];
+//        player3Heading.textContent = data.table_names[2];    
+//        player4Heading.textContent = data.table_names[3];    
+//        const sound = document.getElementById("sound");
+//        if (sound.paused || sound.ended) {
+//            sound.currentTime = 0;
+//        }
+        
+//        sound.play();
+//           setTimeout(() => {
+//        sound.pause();
+//        }, 1000); // 2000 milliseconds (2 seconds)
+//        tableKeeping(receivedTableIndex, receivedCardData);
+     
+        // ...
+//    }
+// });
+// Listen for the 'updateCards' event
+//socket.on('update_all_cards', ({requestTableIndex, shuffledCards}) => {
+//    console.log('Received shuffled cards:', requestTableIndex, shuffledCards);
+    // Handle the received data, e.g., update the UI
+// });
+
       
 
 </script>
