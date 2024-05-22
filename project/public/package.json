@@ -5,15 +5,18 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
-        "dev": "nodemon index.js"
+        "dev": "nodemon index.js",
+        "debug": "node --inspect index.js"
     },
     "author": "Your Name",
     "license": "MIT",
     "dependencies": {
         "express": "^4.17.1",
+        "morgan": "^1.10.0",
         "socket.io": "^4.7.5"
     },
     "devDependencies": {
+        "express-list-endpoints": "^7.1.0",
         "nodemon": "^2.0.14"
     }
 }
