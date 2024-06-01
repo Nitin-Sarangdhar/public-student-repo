@@ -236,61 +236,62 @@
     const param3 = 0; 
     const requestTableIndex = param2;
     let myVariable = 0;
+
     const substitutionMap = {
-    0: "B",
-    1: "A♠",
-    2: "2♠",
-    3: "3♠",
-    4: "4♠",
-    5: "5♠",
-    6: "6♠",
-    7: "7♠",
-    8: "8♠",
-    9: "9♠",
-    10: "10♠",
-    11: "J♠",
-    12: "Q♠",
-    13: "K♠",
-    14: "A♥",
-    15: "2♥",
-    16: "3♥",
-    17: "4♥",
-    18: "5♥",
-    19: "6♥",
-    20: "7♥",
-    21: "8♥",
-    22: "9♥",
-    23: "10♥",
-    24: "J♥",
-    25: "Q♥",
-    26: "K♥",
-    27: "A♦",
-    28: "2♦",
-    29: "3♦",
-    30: "4♦",
-    31: "5♦",
-    32: "6♦",
-    33: "7♦",
-    34: "8♦",
-    35: "9♦",
-    36: "10♦",
-    37: "J♦",
-    38: "Q♦",
-    39: "K♦",
-    40: "A♣",
-    41: "2♣",
-    42: "3♣",
-    43: "4♣",
-    44: "5♣",
-    45: "6♣",
-    46: "7♣",
-    47: "8♣",
-    48: "9♣",
-    49: "10♣",
-    50: "J♣",
-    51: "Q♣",
-    52: "K♣",
-   100: "B" 
+    0: { value: "B", color: "black" },
+    1: { value: "A♠", color: "black" },
+    2: { value: "2♠", color: "black" },
+    3: { value: "3♠", color: "black" },
+    4: { value: "4♠", color: "black" },
+    5: { value: "5♠", color: "black" },
+    6: { value: "6♠", color: "black" },
+    7: { value: "7♠", color: "black" },
+    8: { value: "8♠", color: "black" },
+    9: { value: "9♠", color: "black" },
+    10: { value: "10♠", color: "black" },
+    11: { value: "J♠", color: "black" },
+    12: { value: "Q♠", color: "black" },
+    13: { value: "K♠", color: "black" },
+    14: { value: "A♥", color: "red" },
+    15: { value: "2♥", color: "red" },
+    16: { value: "3♥", color: "red" },
+    17: { value: "4♥", color: "red" },
+    18: { value: "5♥", color: "red" },
+    19: { value: "6♥", color: "red" },
+    20: { value: "7♥", color: "red" },
+    21: { value: "8♥", color: "red" },
+    22: { value: "9♥", color: "red" },
+    23: { value: "10♥", color: "red" },
+    24: { value: "J♥", color: "red" },
+    25: { value: "Q♥", color: "red" },
+    26: { value: "K♥", color: "red" },
+    27: { value: "A♦", color: "red" },
+    28: { value: "2♦", color: "red" },
+    29: { value: "3♦", color: "red" },
+    30: { value: "4♦", color: "red" },
+    31: { value: "5♦", color: "red" },
+    32: { value: "6♦", color: "red" },
+    33: { value: "7♦", color: "red" },
+    34: { value: "8♦", color: "red" },
+    35: { value: "9♦", color: "red" },
+    36: { value: "10♦", color: "red" },
+    37: { value: "J♦", color: "red" },
+    38: { value: "Q♦", color: "red" },
+    39: { value: "K♦", color: "red" },
+    40: { value: "A♣", color: "black" },
+    41: { value: "2♣", color: "black" },
+    42: { value: "3♣", color: "black" },
+    43: { value: "4♣", color: "black" },
+    44: { value: "5♣", color: "black" },
+    45: { value: "6♣", color: "black" },
+    46: { value: "7♣", color: "black" },
+    47: { value: "8♣", color: "black" },
+    48: { value: "9♣", color: "black" },
+    49: { value: "10♣", color: "black" },
+    50: { value: "J♣", color: "black" },
+    51: { value: "Q♣", color: "black" },
+    52: { value: "K♣", color: "black" },
+   100: { value: "B", color: "black" } 
     // card.style.color = 'red';
   };  
   let runningLocally = true; // Set this to true for local testing
@@ -349,12 +350,8 @@
               if (data == "65") {
               data = (parseInt(data) + myVariable).toString();
               console.log("Deal button clicked", data);
-              }
-
               // Perform your action here (e.g., updateAllCards)
-              console.log("Deal button clicked", newdata);
-              
-              
+              fetchData(param2, data);}              
        }
     // Re-enable the button after a delay (e.g., 2 seconds)
     setTimeout(() => {
@@ -424,36 +421,84 @@
     })
     .then(response => response.json())
     .then(data => {
-        // Extract table_index and card_data from the response data
-        const tableIndex = data.table_index;
-        const carddata = data.card_data;
-        return carddata;
+    // Extract table_index and card_data from the response data
+    const tableIndex = data.table_index;
+    const carddata = data.card_data;
 
-        // Use the extracted data as needed
-        console.log("Table Index:", tableIndex, requestTableIndex);
-        console.log("Table Cards:", carddata);
+    // Use the extracted data as needed
+    console.log("Table Index:", tableIndex, requestTableIndex);
+    console.log("Table Cards:", carddata);
 
-        if (requestTableIndex == tableIndex) {
-            // Array of card content for player 1
-            console.log("Table Index1:", tableIndex, requestTableIndex);
-            tableKeeping(requestTableIndex, carddata);
-            // You can also update the HTML content with the data, e.g., display the cards
-            // document.getElementById('cardData').innerHTML = `
-            // <p>Table Index: ${tableIndex}</p>
-            // <p>Table Cards: ${JSON.stringify(tableCards)}</p>
-            // `;
-        }
+    // Perform further actions if necessary, e.g., update the UI
+    if (requestTableIndex == tableIndex) {
+        // Array of card content for player 1
+        console.log("Table Index1:", tableIndex, requestTableIndex);
+        tableKeeping(requestTableIndex, carddata);
+    }
+
+    // Return carddata if needed for further chaining
+    return carddata;
     })
     .catch(error => {
-        console.error('Error fetching data:', error);
+     console.error('Error fetching data:', error);
     });
-}
+
+  }
 
 
 
-function tableKeeping(requestTableIndex, carddata) {
+  function tableKeeping(requestTableIndex, carddata) {
     // Example function to handle card data
     console.log(`Table ${requestTableIndex} cards:`, carddata);
+    // Player 1
+    for (let i = 0; i < 13; i++) {
+        const cardButton = document.getElementById(`player1card${i + 1}`);
+        if (cardButton) {
+          const cardValue = substitutionMap[carddata[i]];
+          cardButton.textContent = cardValue.value; // Update button text with card value
+          cardButton.style.color = cardValue.color; // Set the color of the button text
+        }
+    }
+
+    // Player 2
+    for (let i = 0; i < 13; i++) {
+        const cardButton = document.getElementById(`player2card${i + 1}`);
+        if (cardButton) {
+            const cardValue = substitutionMap[carddata[i+13]];
+            cardButton.textContent = cardValue.value; // Update button text with card value
+            cardButton.style.color = cardValue.color; // Set the color of the button text
+        }
+    }
+
+    // Player 3
+    for (let i = 0; i < 13; i++) {
+        const cardButton = document.getElementById(`player3card${i + 1}`);
+        if (cardButton) {
+            const cardValue = substitutionMap[carddata[i+26]];
+            cardButton.textContent = cardValue.value; // Update button text with card value
+            cardButton.style.color = cardValue.color; // Set the color of the button text
+        }
+    }
+
+    // Player 4
+    for (let i = 0; i < 13; i++) {
+        const cardButton = document.getElementById(`player4card${i + 1}`);
+        if (cardButton) {
+            const cardValue = substitutionMap[carddata[i+39]];
+            cardButton.textContent = cardValue.value; // Update button text with card value
+            cardButton.style.color = cardValue.color; // Set the color of the button text            
+        }
+    }
+    // Update table cards
+    for (let i = 0; i < 8; i++) {
+        const cardButton = document.getElementById(`tablecard${i + 1}`);
+        if (cardButton) {
+            const cardValue = substitutionMap[carddata[i+52]];
+            cardButton.textContent = cardValue.value; // Update button text with card value
+            cardButton.style.color = cardValue.color; // Set the color of the button text            
+        }
+    }
+
 }
 
 // Connect to the server
@@ -469,6 +514,11 @@ socket.on('disconnect', () => {
     console.log('Disconnected from WebSocket');
 });
 
+socket.on('update_all_cards', (shuffledCards) => {
+    // Handle the received shuffled cards data here
+    console.log('Received shuffled cards:', shuffledCards);
+    // Perform further actions as needed, such as updating the UI
+});
 
 //socket.on('update_all_cards', (data) => {
     // Handle the received data, including card_data and table_index
