@@ -35,6 +35,12 @@ app.use('/api', apiRoutes);
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Pass the io object to routes or middleware if needed
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
 // Handle requests for favicon.ico
 app.get('/favicon.ico', (req, res) => {
   res.status(204).end();
