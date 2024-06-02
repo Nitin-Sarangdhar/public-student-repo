@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
     console.log('A client connected');
 
     socket.on('disconnect', () => {
-      console.log('A client disconnected');
+        console.log('A client disconnected');
     });
     
     // Handle other Socket.IO events as needed
@@ -26,8 +26,8 @@ app.use(express.json());
 // Use Morgan middleware for logging incoming requests
 app.use(morgan('dev'));
 
-// Import routes
-const apiRoutes = require('./routes/api');
+// Import routes and pass io and app
+const apiRoutes = require('./routes/api')(io, app);
 
 // Use routes
 app.use('/api', apiRoutes);
@@ -35,20 +35,14 @@ app.use('/api', apiRoutes);
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Pass the io object to routes or middleware if needed
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
-
 // Handle requests for favicon.ico
 app.get('/favicon.ico', (req, res) => {
-  res.status(204).end();
+    res.status(204).end();
 });
 
 // Define a route to serve index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Define a route to serve new-page.html
@@ -65,7 +59,7 @@ app.get('/heartseven', (req, res) => {
     
     // Send the heartseven.html file
     res.sendFile(path.join(__dirname, 'public', 'heartseven.html'));
-  
+
     // Log a message after sending the file
     console.log('heartseven.html sent successfully');
 });
@@ -80,7 +74,8 @@ const listEndpoints = require('express-list-endpoints');
 console.log(listEndpoints(app));
 
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });
+
 
 
