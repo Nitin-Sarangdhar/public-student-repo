@@ -517,6 +517,8 @@ socket.on('disconnect', () => {
 socket.on('update_all_cards', (shuffledCards) => {
     // Handle the received shuffled cards data here
     console.log('Received shuffled cards:', shuffledCards);
+    tableKeeping(requestTableIndex, shuffledCards);
+    
     // Perform further actions as needed, such as updating the UI
 });
 
