@@ -113,6 +113,11 @@
   .p1card12 { top: 65%; left: 60%; }
   .p1card13 { top: 65%; left: 70%; }
   .p1card14 { top: 65%; left: 80%; } 
+
+  .highlight {
+    background-color: yellow; /* Or any other highlighting style */
+    color: black; /* Ensure text is readable */
+  }
 </style>
 
 </head>
@@ -130,7 +135,7 @@
     <div class="footer">Footer Text</div>
   </div>
   <div class="box top-middle-box">
-    <div class="header">Player 1</div>
+    <div class="header" id="player1-header">Player 1</div>
     <button class="button p1card1" id="player1card1" onclick="disableButton(this, '1')"> B</button>
     <button class="button p1card2" id="player1card2" onclick="disableButton(this, '2')"> B</button>
     <button class="button p1card3" id="player1card3" onclick="disableButton(this, '3')"> B</button>
@@ -148,7 +153,7 @@
     <div class="footer">Footer Text</div>
   </div>
   <div class="box right-middle-box">
-    <div class="header">Player 2</div>
+    <div class="header" id="player2-header">Player 2</div>
     <button class="button p1card1" id="player2card1" onclick="disableButton(this, '14')"> B</button>
     <button class="button p1card2" id="player2card2" onclick="disableButton(this, '15')"> B</button>
     <button class="button p1card3" id="player2card3" onclick="disableButton(this, '16')"> B</button>
@@ -166,7 +171,7 @@
     <div class="footer">Footer Text</div>
   </div>
   <div class="box bottom-middle-box">
-    <div class="header">Player 3</div>
+    <div class="header" id="player3-header">Player 3</div>
     <button class="button p1card1" id="player3card1" onclick="disableButton(this, '27')"> B</button>
     <button class="button p1card2" id="player3card2" onclick="disableButton(this, '28')"> B</button>
     <button class="button p1card3" id="player3card3" onclick="disableButton(this, '29')"> B</button>
@@ -184,7 +189,7 @@
     <div class="footer">Footer Text</div>
   </div>
   <div class="box left-middle-box">
-    <div class="header">Player 4</div>
+    <div class="header" id="player4-header">Player 4</div>
     <button class="button p1card1" id="player4card1" onclick="disableButton(this, '40')"> B</button>
     <button class="button p1card2" id="player4card2" onclick="disableButton(this, '41')"> B</button>
     <button class="button p1card3" id="player4card3" onclick="disableButton(this, '42')"> B</button>
@@ -451,12 +456,43 @@
     // Example function to handle card data
     console.log(`Table ${requestTableIndex} cards:`, carddata);
     // Player 1
+    const player1Header = document.getElementById('player1-header');
+    const player2Header = document.getElementById('player2-header');
+    const player3Header = document.getElementById('player3-header');
+    const player4Header = document.getElementById('player4-header');
+    if (carddata[60] == 0) {
+      player1Header.classList.add('highlight');
+      player2Header.classList.remove('highlight');
+      player3Header.classList.remove('highlight');
+      player4Header.classList.remove('highlight');
+    } else if (carddata[60] == 1) {
+      player1Header.classList.remove('highlight');
+      player2Header.classList.add('highlight');
+      player3Header.classList.remove('highlight');
+      player4Header.classList.remove('highlight');
+    } else if (carddata[60] == 2) {
+      player1Header.classList.remove('highlight');
+      player2Header.classList.remove('highlight');
+      player3Header.classList.add('highlight');
+      player4Header.classList.remove('highlight');
+    } else if (carddata[60] == 3) {
+      player1Header.classList.remove('highlight');
+      player2Header.classList.remove('highlight');
+      player3Header.classList.remove('highlight');
+      player4Header.classList.add('highlight');
+    } else {}
+
+
+
     for (let i = 0; i < 13; i++) {
         const cardButton = document.getElementById(`player1card${i + 1}`);
         if (cardButton) {
           const cardValue = substitutionMap[carddata[i]];
           cardButton.textContent = cardValue.value; // Update button text with card value
           cardButton.style.color = cardValue.color; // Set the color of the button text
+          if (cardValue.value === 'B') {
+            cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
+          } 
         }
     }
 
@@ -467,6 +503,9 @@
             const cardValue = substitutionMap[carddata[i+13]];
             cardButton.textContent = cardValue.value; // Update button text with card value
             cardButton.style.color = cardValue.color; // Set the color of the button text
+            if (cardValue.value === 'B') {
+             cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
+            } 
         }
     }
 
@@ -477,7 +516,10 @@
             const cardValue = substitutionMap[carddata[i+26]];
             cardButton.textContent = cardValue.value; // Update button text with card value
             cardButton.style.color = cardValue.color; // Set the color of the button text
-        }
+            if (cardValue.value === 'B') {
+             cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
+            } 
+     }
     }
 
     // Player 4
@@ -487,7 +529,10 @@
             const cardValue = substitutionMap[carddata[i+39]];
             cardButton.textContent = cardValue.value; // Update button text with card value
             cardButton.style.color = cardValue.color; // Set the color of the button text            
-        }
+            if (cardValue.value === 'B') {
+              cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
+            } 
+     }
     }
     // Update table cards
     for (let i = 0; i < 8; i++) {
@@ -496,7 +541,10 @@
             const cardValue = substitutionMap[carddata[i+52]];
             cardButton.textContent = cardValue.value; // Update button text with card value
             cardButton.style.color = cardValue.color; // Set the color of the button text            
-        }
+            if (cardValue.value === 'B') {
+              cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
+            } 
+    }
     }
 
 }
@@ -514,13 +562,35 @@ socket.on('disconnect', () => {
     console.log('Disconnected from WebSocket');
 });
 
+
 socket.on('update_all_cards', (shuffledCards) => {
-    // Handle the received shuffled cards data here
-    console.log('Received shuffled cards:', shuffledCards);
-    tableKeeping(requestTableIndex, shuffledCards);
-    
-    // Perform further actions as needed, such as updating the UI
-});
+            // Handle the received shuffled cards data here
+            console.log('Received shuffled cards:', shuffledCards);
+            tableKeeping(requestTableIndex, shuffledCards);
+
+            // Get the audio element by its ID
+            const sound = document.getElementById("sound");
+
+            if (sound) {
+                // Always reset the audio to the beginning and play it
+                sound.currentTime = 0;
+                sound.play()
+                    .then(() => {
+                        // Set a timeout to pause the audio after 2 seconds
+                        setTimeout(() => {
+                            sound.pause();
+                        }, 2000); // 2000 milliseconds = 2 seconds
+                    })
+                    .catch(error => {
+                        console.error('Error playing the sound:', error);
+                    });
+            } else {
+                console.error('Audio element with ID "sound" not found.');
+            }
+
+            // Perform further actions as needed, such as updating the UI
+        });
+
 
 //socket.on('update_all_cards', (data) => {
     // Handle the received data, including card_data and table_index
