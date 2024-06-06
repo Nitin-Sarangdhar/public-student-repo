@@ -57,6 +57,14 @@
     height: 30%;
   }
 
+  .topRightBox {
+    position: absolute;
+    top: 0%; /* Adjust top position as needed */
+    right: 2%; /* Adjust right position as needed */
+    background-color: lightblue;
+  }
+
+
   .button {
     position: absolute;
     width: 10%; /* Adjust width of cards */
@@ -67,6 +75,13 @@
     border-radius: 10%;
     transform: translate(-50%, -50%);
   }
+
+  bigbutton {
+      background-color: lightgreen;
+      font-size: 36px; /* Font size of the button text */
+      padding: 10px 20px; /* Size of the button */
+    }
+
 
   .header,
     .footer {
@@ -117,6 +132,8 @@
   .highlight {
     background-color: yellow; /* Or any other highlighting style */
     color: black; /* Ensure text is readable */
+
+  
   }
 </style>
 
@@ -150,7 +167,7 @@
     <button class="button p1card12" id="player1card12" onclick="disableButton(this, '12')"> B</button>
     <button class="button p1card13" id="player1card13" onclick="disableButton(this, '13')"> B</button>
     <button class="button p1card14" id="player1pass" onclick="disableButton(this, '61')"> P</button>
-    <div class="footer">Footer Text</div>
+    <div class="footer" id = "player1-footer">Footer Text</div>
   </div>
   <div class="box right-middle-box">
     <div class="header" id="player2-header">Player 2</div>
@@ -168,7 +185,7 @@
     <button class="button p1card12" id="player2card12" onclick="disableButton(this, '25')"> B</button>
     <button class="button p1card13" id="player2card13" onclick="disableButton(this, '26')"> B</button>
     <button class="button p1card14" id="player2pass" onclick="disableButton(this, '62')"> P</button>
-    <div class="footer">Footer Text</div>
+    <div class="footer" id = "player2-footer">Footer Text</div>
   </div>
   <div class="box bottom-middle-box">
     <div class="header" id="player3-header">Player 3</div>
@@ -186,7 +203,7 @@
     <button class="button p1card12" id="player3card12" onclick="disableButton(this, '38')"> B</button>
     <button class="button p1card13" id="player3card13" onclick="disableButton(this, '39')"> B</button>
     <button class="button p1card14" id="player3pass" onclick="disableButton(this, '63')"> P</button>
-    <div class="footer">Footer Text</div>
+    <div class="footer" id = "player3-footer">Footer Text</div>
   </div>
   <div class="box left-middle-box">
     <div class="header" id="player4-header">Player 4</div>
@@ -204,430 +221,39 @@
     <button class="button p1card12" id="player4card12" onclick="disableButton(this, '51')"> B</button>
     <button class="button p1card13" id="player4card13" onclick="disableButton(this, '52')"> B</button>
     <button class="button p1card14" id="player4pass" onclick="disableButton(this, '64')"> P</button>
-    <div class="footer">Footer Text</div>
+    <div class="footer" id = "player4-footer">Footer Text</div>
   </div>
   <div class="bottom-left-box"> 
-    <button class="button p1card1" id="redeal-button" onclick="disableButton(this, '65')">Deal</button>
-    <button class="button p1card2" id="updateAllCards" onclick="disableButton(this, '0')">Play</button>
+    <button class="bigbutton p1card1" id="redeal-button" onclick="disableButton(this, '65')" style="background-color: lightgreen;   font-size: 36px; padding: 10px 20px">Deal</button>
+  <!--  <button class="button p1card2" id="updateAllCards" onclick="disableButton(this, '0')">Play</button>
     <button class="button p1card3" id="backConfiguration" onclick="disableButton(this, '70')"> Cfg</button>
     <button class="button p1card8" id="helpbutton"> Help</button>
     <div id="help-message" style="max-width: 200px;">
-<!--        <p>The object of the game is to finish all cards in a player's hand. 
-           The first card allowed to be played is 7♥. A new suit is allowed 
-           only by playing the corresponding 7. A highlighted player must play 
-           a card adjacent to any card on the table or pass. Play button can
-           be clicked any time during the play to auto-continue the game.
-           The policy for play can be selected with the policy button.
-           Click play multiple times to become familiar with the game.
-           Click help again to close the help window. 
-        </p> -->
     </div>
     <div id="message-container"></div>
+  </div> -->
   </div>
+  <div class = "box topRightBox">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+
   <audio id="sound">
     <source src="/audio.mp3" type="audio/mpeg">
   </audio>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-  <script>
-    // Get the values of specific parameters from the previous page
-    // const param1 = urlParams.get("param1");   // demo = 0; single = 1; multi start = 2; multi join = 3
-    // const param2 = urlParams.get("param2");   // tableIndex
-    // const param3 = urlParams.get("param3");   // Playername
-    // const param4 = urlParams.get("param4");   // PlayerCount Min = 0, Max = 3
-    // temporary definition
-    const param1 = 0; 
-    const param2 = 0;
-    const param3 = 0; 
-    const requestTableIndex = param2;
-    let myVariable = 0;
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="heartseven.js"></script>
+<!--  <script type="module" src="./heartseven.js"></script> <!-- Ensure the correct path 
+/*         <p>The object of the game is to finish all cards in a player's hand. 
+  The first card allowed to be played is 7♥. A new suit is allowed 
+  only by playing the corresponding 7. A highlighted player must play 
+  a card adjacent to any card on the table or pass. Play button can
+  be clicked any time during the play to auto-continue the game.
+  The policy for play can be selected with the policy button.
+  Click play multiple times to become familiar with the game.
+  Click help again to close the help window. 
+</p> -->
 
-    const substitutionMap = {
-    0: { value: "B", color: "black" },
-    1: { value: "A♠", color: "black" },
-    2: { value: "2♠", color: "black" },
-    3: { value: "3♠", color: "black" },
-    4: { value: "4♠", color: "black" },
-    5: { value: "5♠", color: "black" },
-    6: { value: "6♠", color: "black" },
-    7: { value: "7♠", color: "black" },
-    8: { value: "8♠", color: "black" },
-    9: { value: "9♠", color: "black" },
-    10: { value: "10♠", color: "black" },
-    11: { value: "J♠", color: "black" },
-    12: { value: "Q♠", color: "black" },
-    13: { value: "K♠", color: "black" },
-    14: { value: "A♥", color: "red" },
-    15: { value: "2♥", color: "red" },
-    16: { value: "3♥", color: "red" },
-    17: { value: "4♥", color: "red" },
-    18: { value: "5♥", color: "red" },
-    19: { value: "6♥", color: "red" },
-    20: { value: "7♥", color: "red" },
-    21: { value: "8♥", color: "red" },
-    22: { value: "9♥", color: "red" },
-    23: { value: "10♥", color: "red" },
-    24: { value: "J♥", color: "red" },
-    25: { value: "Q♥", color: "red" },
-    26: { value: "K♥", color: "red" },
-    27: { value: "A♦", color: "red" },
-    28: { value: "2♦", color: "red" },
-    29: { value: "3♦", color: "red" },
-    30: { value: "4♦", color: "red" },
-    31: { value: "5♦", color: "red" },
-    32: { value: "6♦", color: "red" },
-    33: { value: "7♦", color: "red" },
-    34: { value: "8♦", color: "red" },
-    35: { value: "9♦", color: "red" },
-    36: { value: "10♦", color: "red" },
-    37: { value: "J♦", color: "red" },
-    38: { value: "Q♦", color: "red" },
-    39: { value: "K♦", color: "red" },
-    40: { value: "A♣", color: "black" },
-    41: { value: "2♣", color: "black" },
-    42: { value: "3♣", color: "black" },
-    43: { value: "4♣", color: "black" },
-    44: { value: "5♣", color: "black" },
-    45: { value: "6♣", color: "black" },
-    46: { value: "7♣", color: "black" },
-    47: { value: "8♣", color: "black" },
-    48: { value: "9♣", color: "black" },
-    49: { value: "10♣", color: "black" },
-    50: { value: "J♣", color: "black" },
-    51: { value: "Q♣", color: "black" },
-    52: { value: "K♣", color: "black" },
-   100: { value: "B", color: "black" } 
-    // card.style.color = 'red';
-  };  
-  let runningLocally = true; // Set this to true for local testing
-    //const runningLocally = false; // Set this to true for local testing
-  if (window.location.hostname === 'localhost') {
-      console.log('Client is connecting to the local server.');
-      runningLocally = true;
-    } else {
-      console.log('Client is connecting to a remote server.');
-      runningLocally = false;
-    }
-
-    // Determine the base URL to use based on the environment
-  // const baseUrl = runningLocally ? 'http://localhost:8080' : 'https://zpekpk8jsx.us-east-2.awsapprunner.com';
-    // Construct the URLs for API calls
-  // const cardsUrl = baseUrl + `/cards`;
-  // const updateCardsUrl = baseUrl + `/update_all_cards/${requestTableIndex}`;
-  const baseUrl = runningLocally ? 'http://localhost:3000' : 'https://zpekpk8jsx.us-east-2.awsapprunner.com';
-  const cardsUrl = baseUrl + `/api/cards`;
-  const updateCardsUrl = `${baseUrl}/api/update_all_cards`
-  const trialPostUrl = `${baseUrl}/api/trialpost`;
-  function disableButton(button, data) {
-    // Disable the button to prevent double-clicking
-       var myCurrentPolicy = 0;  // Corrected the variable name to match the one used later
-       const policyMap = {
-         0: "Beginner",
-         1: "Intermediate",
-         2: "Advanced",
-         3: "Expert"
-       };
-       button.disabled = true;
-       //const sound = document.getElementById("sound");
-       // if (sound.paused || sound.ended) {
-       //     sound.currentTime = 0;
-       // }
-        
-       // Play the audio
-       // sound.play();
-       // setTimeout(() => {
-       // sound.pause();
-       // }, 1000); // 2000 milliseconds (2 seconds)
-   
-
-       if (data == '66' || data == '67' || data == '68' || data == '69') {
-             myCurrentPolicy = myVariable;  // Corrected variable name
-             myVariable = parseInt(data) - 66;
-             if (myCurrentPolicy == myVariable) {
-                 alert('Your current and new policy is ' + policyMap[myCurrentPolicy]);  // Corrected function name   
-             }
-             else {
-                 alert('Your current policy is ' + policyMap[myCurrentPolicy] + ' Your new policy is ' + policyMap[myVariable] + ' New policy will take effect after Deal is clicked');  // Corrected function name
-             }
-       } else if (data == "70") { 
-             window.location.href = "configuration5.html"; // Change to your login page URL
-       } else {   
-              if (data == "65") {
-              data = (parseInt(data) + myVariable).toString();
-              console.log("Deal button clicked", data);
-              // Perform your action here (e.g., updateAllCards)
-              fetchData(param2, data);}              
-       }
-    // Re-enable the button after a delay (e.g., 2 seconds)
-    setTimeout(() => {
-        button.disabled = false;
-    }, 2000); // 2000 milliseconds (2 seconds)
-    }
-
-    // Add a click event listener to the "Help" button
-  //  helpButton.addEventListener('click', toggleHelpMessage);
-
-  function fetchData4() {
-    // Send the button click event to the server
-    fetch(`${trialPostUrl}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({}), // Empty body
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the response data
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
-  }
-
-
-
-  function fetchData3() {
-    fetch('/api/trial')
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error fetching data:', error));
-  }
-
-  function fetchData1() {
-            fetch('/api/data')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Trial request successful:', data);
-                    alert('Trial request successful. Check console for response.');
-                })
-                .catch(error => {
-                    console.error('Error making trial request:', error);
-                    alert('Error making trial request. Check console for details.');
-                });
-        }
-
-  function fetchData(requestTableIndex, buttonId) {
-    const data = {
-        action: 'buttonClick',
-        buttonId: buttonId,
-    };
-
-    // Log the request going out, including the buttonId
-    console.log('Sending request to:', `${updateCardsUrl}/${requestTableIndex}`, 'with buttonId:', buttonId);
-
-    // Send the button click event to the server
-    fetch(`${updateCardsUrl}/${requestTableIndex}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-    // Extract table_index and card_data from the response data
-    const tableIndex = data.table_index;
-    const carddata = data.card_data;
-
-    // Use the extracted data as needed
-    console.log("Table Index:", tableIndex, requestTableIndex);
-    console.log("Table Cards:", carddata);
-
-    // Perform further actions if necessary, e.g., update the UI
-    if (requestTableIndex == tableIndex) {
-        // Array of card content for player 1
-        console.log("Table Index1:", tableIndex, requestTableIndex);
-        tableKeeping(requestTableIndex, carddata);
-    }
-
-    // Return carddata if needed for further chaining
-    return carddata;
-    })
-    .catch(error => {
-     console.error('Error fetching data:', error);
-    });
-
-  }
-
-
-
-  function tableKeeping(requestTableIndex, carddata) {
-    // Example function to handle card data
-    console.log(`Table ${requestTableIndex} cards:`, carddata);
-    // Player 1
-    const player1Header = document.getElementById('player1-header');
-    const player2Header = document.getElementById('player2-header');
-    const player3Header = document.getElementById('player3-header');
-    const player4Header = document.getElementById('player4-header');
-    if (carddata[60] == 0) {
-      player1Header.classList.add('highlight');
-      player2Header.classList.remove('highlight');
-      player3Header.classList.remove('highlight');
-      player4Header.classList.remove('highlight');
-    } else if (carddata[60] == 1) {
-      player1Header.classList.remove('highlight');
-      player2Header.classList.add('highlight');
-      player3Header.classList.remove('highlight');
-      player4Header.classList.remove('highlight');
-    } else if (carddata[60] == 2) {
-      player1Header.classList.remove('highlight');
-      player2Header.classList.remove('highlight');
-      player3Header.classList.add('highlight');
-      player4Header.classList.remove('highlight');
-    } else if (carddata[60] == 3) {
-      player1Header.classList.remove('highlight');
-      player2Header.classList.remove('highlight');
-      player3Header.classList.remove('highlight');
-      player4Header.classList.add('highlight');
-    } else {}
-
-
-
-    for (let i = 0; i < 13; i++) {
-        const cardButton = document.getElementById(`player1card${i + 1}`);
-        if (cardButton) {
-          const cardValue = substitutionMap[carddata[i]];
-          cardButton.textContent = cardValue.value; // Update button text with card value
-          cardButton.style.color = cardValue.color; // Set the color of the button text
-          if (cardValue.value === 'B') {
-            cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
-          } 
-        }
-    }
-
-    // Player 2
-    for (let i = 0; i < 13; i++) {
-        const cardButton = document.getElementById(`player2card${i + 1}`);
-        if (cardButton) {
-            const cardValue = substitutionMap[carddata[i+13]];
-            cardButton.textContent = cardValue.value; // Update button text with card value
-            cardButton.style.color = cardValue.color; // Set the color of the button text
-            if (cardValue.value === 'B') {
-             cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
-            } 
-        }
-    }
-
-    // Player 3
-    for (let i = 0; i < 13; i++) {
-        const cardButton = document.getElementById(`player3card${i + 1}`);
-        if (cardButton) {
-            const cardValue = substitutionMap[carddata[i+26]];
-            cardButton.textContent = cardValue.value; // Update button text with card value
-            cardButton.style.color = cardValue.color; // Set the color of the button text
-            if (cardValue.value === 'B') {
-             cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
-            } 
-     }
-    }
-
-    // Player 4
-    for (let i = 0; i < 13; i++) {
-        const cardButton = document.getElementById(`player4card${i + 1}`);
-        if (cardButton) {
-            const cardValue = substitutionMap[carddata[i+39]];
-            cardButton.textContent = cardValue.value; // Update button text with card value
-            cardButton.style.color = cardValue.color; // Set the color of the button text            
-            if (cardValue.value === 'B') {
-              cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
-            } 
-     }
-    }
-    // Update table cards
-    for (let i = 0; i < 8; i++) {
-        const cardButton = document.getElementById(`tablecard${i + 1}`);
-        if (cardButton) {
-            const cardValue = substitutionMap[carddata[i+52]];
-            cardButton.textContent = cardValue.value; // Update button text with card value
-            cardButton.style.color = cardValue.color; // Set the color of the button text            
-            if (cardValue.value === 'B') {
-              cardButton.style.backgroundColor = 'white'; // Change background color to red for value 0 (adjust color as needed)
-            } 
-    }
-    }
-
-}
-
-// Connect to the server
-const socket = io.connect(baseUrl);
-// Listen for the connect event
-
-socket.on('connect', () => {
-    console.log('Connected to WebSocket');
-});
-
-// Listen for the disconnect event
-socket.on('disconnect', () => {
-    console.log('Disconnected from WebSocket');
-});
-
-
-socket.on('update_all_cards', (shuffledCards) => {
-            // Handle the received shuffled cards data here
-            console.log('Received shuffled cards:', shuffledCards);
-            tableKeeping(requestTableIndex, shuffledCards);
-
-            // Get the audio element by its ID
-            const sound = document.getElementById("sound");
-
-            if (sound) {
-                // Always reset the audio to the beginning and play it
-                sound.currentTime = 0;
-                sound.play()
-                    .then(() => {
-                        // Set a timeout to pause the audio after 2 seconds
-                        setTimeout(() => {
-                            sound.pause();
-                        }, 2000); // 2000 milliseconds = 2 seconds
-                    })
-                    .catch(error => {
-                        console.error('Error playing the sound:', error);
-                    });
-            } else {
-                console.error('Audio element with ID "sound" not found.');
-            }
-
-            // Perform further actions as needed, such as updating the UI
-        });
-
-
-//socket.on('update_all_cards', (data) => {
-    // Handle the received data, including card_data and table_index
-//    const expectedTableIndex = param2;
-//    const receivedCardData = data.card_data;
-//    const receivedTableIndex = data.table_index;
-//    console.log ('received_update_data from Websocket');
-    // Check if the received table_index matches the client's expected value
-//    if (receivedTableIndex == expectedTableIndex) {
-        // Perform the update with receivedCardData
-//        console.log ('received_update_data from Websocket inside If');
-//        player1Heading.textContent = data.table_names[0];    
-//        player2Heading.textContent = data.table_names[1];
-//        player3Heading.textContent = data.table_names[2];    
-//        player4Heading.textContent = data.table_names[3];    
-//        const sound = document.getElementById("sound");
-//        if (sound.paused || sound.ended) {
-//            sound.currentTime = 0;
-//        }
-        
-//        sound.play();
-//           setTimeout(() => {
-//        sound.pause();
-//        }, 1000); // 2000 milliseconds (2 seconds)
-//        tableKeeping(receivedTableIndex, receivedCardData);
-     
-        // ...
-//    }
-// });
-// Listen for the 'updateCards' event
-//socket.on('update_all_cards', ({requestTableIndex, shuffledCards}) => {
-//    console.log('Received shuffled cards:', requestTableIndex, shuffledCards);
-    // Handle the received data, e.g., update the UI
-// });
-
-      
-
-</script>
 </body>
 </html>
