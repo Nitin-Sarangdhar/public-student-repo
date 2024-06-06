@@ -166,6 +166,11 @@ module.exports = function(io) {
             // Create a shuffled list of numbers from 1 to 52
             const cards = Array.from({ length: 52 }, (_, i) => i + 1);
             let shuffledCards = shuffle(cards);
+            shuffledCards = shuffledCards.slice(0, 13).sort((a, b) => a - b).concat(shuffledCards.slice(13));
+            shuffledCards = shuffledCards.slice(0, 13).concat(shuffledCards.slice(13, 26).sort((a, b) => a - b)).concat(shuffledCards.slice(26));
+            shuffledCards = shuffledCards.slice(0, 26).concat(shuffledCards.slice(26, 39).sort((a, b) => a - b)).concat(shuffledCards.slice(39));
+            shuffledCards = shuffledCards.slice(0, 39).concat(shuffledCards.slice(39, 52).sort((a, b) => a - b)).concat(shuffledCards.slice(52));
+            
             for (let i = 0; i < 10; i++) {
                 shuffledCards.push(0);
             }
@@ -185,7 +190,7 @@ module.exports = function(io) {
                 if (checkStoppingCondition(shuffledCards)) {
                     clearInterval(intervalId);
                 }
-            }, 5000); // 5000 milliseconds = 5 seconds
+            }, 1000); // 5000 milliseconds = 5 seconds
 
         } catch (error) {
             // Handle errors
