@@ -113,7 +113,7 @@ function calcPlayerPoints(carddata) {
     // Construct the URLs for API calls
   // const cardsUrl = baseUrl + `/cards`;
   // const updateCardsUrl = baseUrl + `/update_all_cards/${requestTableIndex}`;
-  const baseUrl = runningLocally ? 'http://localhost:3000' : 'https://zpekpk8jsx.us-east-2.awsapprunner.com';
+  const baseUrl = runningLocally ? 'http://localhost:3000' : '*';
   const cardsUrl = baseUrl + `/api/cards`;
   const updateCardsUrl = `${baseUrl}/api/update_all_cards`
   const trialPostUrl = `${baseUrl}/api/trialpost`;
