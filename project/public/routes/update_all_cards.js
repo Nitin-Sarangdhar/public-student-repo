@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors'); // Import the CORS middleware
+
+// Apply CORS middleware to this router
+router.use(cors());
+
 
 // Function to shuffle an array
 function shuffle(array) {

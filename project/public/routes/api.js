@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const cors = require('cors'); // Import the CORS middleware
+
 module.exports = function(io, app) {
     // Middleware to pass io object
     app.use((req, res, next) => {
         req.io = io;
         next();
     });
+
+    router.use(cors());
 
     const trialRoute = require('./trial');
     const trialPostRoute = require('./trialpost');
