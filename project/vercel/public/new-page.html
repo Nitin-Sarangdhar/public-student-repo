@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Page</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Align items in the center vertically */
+      height: 100vh; /* Full viewport height to help with centering */
+    }
+    .image, .text {
+      width: 50%; /* Each takes up 50% of the container width */
+    }
+    .text {
+      padding-left: 20px; /* Space between the image and the text */
+      text-align: center; /* Center the text inside the text block */
+    }
+    .text ul {
+      text-align: left; /* Align the bullet points to the left */
+      font-size: 20px; /* Increase the font size */
+    }
+    h1 {
+      text-align: center; /* Center the heading */
+      margin-bottom: 20px; /* Add some space below the heading */
+    }
+    button {
+      font-size: 36px; /* Font size of the button text */
+      padding: 10px 20px; /* Size of the button */
+      background-color: lightgreen;
+    }
+    h2 {
+      text-align: left; /* Center the heading */
+      margin-bottom: 20px; /* Add some space below the heading */
+      font-size: 20px;
+    }
+ 
+  </style>
+</head>
+<body>
+  <h1>Rules and Status HeartSeven</h1>
+  
+  <!-- Container to hold the image and text block -->
+  <div class="container">
+    <img src="myImage.jpg" alt="Description of the image" class="image" style="width:50%;height:auto;">
+    <div class="text">
+      <h2>Rules</h2>
+      <ul>
+        <li>There are four players in this game who play clockwise starting with player 1.</li>
+        <li>A player passes if he does not have any valid card to play.</li>
+        <li>The first valid card is heart 7. Subsequent valid cards are 7 from any other suit or a card that is adjacent to an existing table card.</li>
+        <li>The player with no card left wins the game.</li>
+        <li>The remaining players get a penalty based on the remaining cards in their hands.</li>
+        <li>The game is played seven times to determine the winner.</li>
+      </ul>
+        <h2>Status</h2>
+      <ul>
+        <li>Current status of the game: Implemented with four automatic players.</li>
+        <li>Additional functionality will be enabled in a future revision.</li>
+        <li>Click Deal on the next page to get a demo.</li>
+      </ul>
+      <button onclick="openHeartsevenPage()">Open Heartseven</button>
+    </div>  
+  </div>
+  <script>
+    function openHeartsevenPage() {
+      // Navigate to the heartseven route
+      window.location.href = '/heartseven';
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+

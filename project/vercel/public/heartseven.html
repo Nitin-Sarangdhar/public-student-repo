@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centered Boxes</title>
+<style>
+  /* Centered box */
+  
+  .box {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    background-color: blue;
+  }
+
+  .center-box {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: darkblue;
+  
+  }
+  /* Top middle box */
+  .top-middle-box {
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Bottom middle box */
+  .bottom-middle-box {
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Left middle box */
+  .left-middle-box {
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+  }
+
+  /* Right middle box */
+  .right-middle-box {
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+  }
+
+  .bottom-left-box {
+    position: absolute;
+    bottom: 0%;
+    left: 2%;
+    width: 30%;
+    height: 30%;
+  }
+
+  .topRightBox {
+    position: absolute;
+    top: 0%; /* Adjust top position as needed */
+    right: 2%; /* Adjust right position as needed */
+    background-color: lightblue;
+  }
+
+
+  .button {
+    position: absolute;
+    width: 10%; /* Adjust width of cards */
+    height: 28.5%; /* Adjust height of cards */
+    margin: 1%; /* Adjust margin between cards */
+    background-color: yellow;
+    border: 1% solid black;
+    border-radius: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  bigbutton {
+      background-color: lightgreen;
+      font-size: 36px; /* Font size of the button text */
+      padding: 10px 20px; /* Size of the button */
+    }
+
+
+  .header,
+    .footer {
+        width: 60%; /* Adjust width */
+        height: 10%; /* Adjust height as needed */
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Center horizontally */
+        background-color: black; /* Adjust background color as needed */
+        color: white; /* Font color */
+        text-align: center; /* Center text horizontally */
+        line-height: 20px; /* Center vertically */
+    }
+
+    .header {
+        top: 0;
+    }
+
+    .footer {
+        bottom: 0;
+    }
+
+  /* Card positions */
+  .tcard1 { top: 35%; left: 35%; }
+  .tcard3 { top: 35%; left: 45%; }
+  .tcard5 { top: 35%; left: 55%; }
+  .tcard7 { top: 35%; left: 65%; }
+  .tcard2 { top: 65%; left: 35%; }
+  .tcard4 { top: 65%; left: 45%; }
+  .tcard6 { top: 65%; left: 55%; }
+  .tcard8 { top: 65%; left: 65%; } 
+
+  .p1card1 { top: 35%; left: 20%; }
+  .p1card2 { top: 35%; left: 30%;}
+  .p1card3 { top: 35%; left: 40%; }
+  .p1card4 { top: 35%; left: 50%; }
+  .p1card5 { top: 35%; left: 60%; }
+  .p1card6 { top: 35%; left: 70%; }
+  .p1card7 { top: 35%; left: 80%; }
+  .p1card8 { top: 65%; left: 20%; }
+  .p1card9 { top: 65%; left: 30%;}
+  .p1card10 { top: 65%; left: 40%; }
+  .p1card11 { top: 65%; left: 50%; }
+  .p1card12 { top: 65%; left: 60%; }
+  .p1card13 { top: 65%; left: 70%; }
+  .p1card14 { top: 65%; left: 80%; } 
+
+  .highlight {
+    background-color: yellow; /* Or any other highlighting style */
+    color: black; /* Ensure text is readable */
+
+  
+  }
+</style>
+
+</head>
+<body>
+  <div class="box center-box">
+    <div class="header">Table</div>
+    <button class="button tcard1" id="tablecard1" onclick="disableButton(this, '53')"> B</button>
+    <button class="button tcard3" id="tablecard3" onclick="disableButton(this, '55')"> B</button>
+    <button class="button tcard5" id="tablecard5" onclick="disableButton(this, '57')"> B</button>
+    <button class="button tcard7" id="tablecard7" onclick="disableButton(this, '59')"> B</button>
+    <button class="button tcard2" id="tablecard2" onclick="disableButton(this, '54')"> B</button>
+    <button class="button tcard4" id="tablecard4" onclick="disableButton(this, '56')"> B</button>
+    <button class="button tcard6" id="tablecard6" onclick="disableButton(this, '58')"> B</button>
+    <button class="button tcard8" id="tablecard8" onclick="disableButton(this, '60')"> B</button> 
+    <div class="footer">Footer Text</div>
+  </div>
+  <div class="box top-middle-box">
+    <div class="header" id="player1-header">Player 1</div>
+    <button class="button p1card1" id="player1card1" onclick="disableButton(this, '1')"> B</button>
+    <button class="button p1card2" id="player1card2" onclick="disableButton(this, '2')"> B</button>
+    <button class="button p1card3" id="player1card3" onclick="disableButton(this, '3')"> B</button>
+    <button class="button p1card4" id="player1card4" onclick="disableButton(this, '4')"> B</button>
+    <button class="button p1card5" id="player1card5" onclick="disableButton(this, '5')"> B</button>
+    <button class="button p1card6" id="player1card6" onclick="disableButton(this, '6')"> B</button>
+    <button class="button p1card7" id="player1card7" onclick="disableButton(this, '7')"> B</button>
+    <button class="button p1card8" id="player1card8" onclick="disableButton(this, '8')"> B</button> 
+    <button class="button p1card9" id="player1card9" onclick="disableButton(this, '9')"> B</button> 
+    <button class="button p1card10" id="player1card10" onclick="disableButton(this, '10')"> B</button>
+    <button class="button p1card11" id="player1card11" onclick="disableButton(this, '11')"> B</button>
+    <button class="button p1card12" id="player1card12" onclick="disableButton(this, '12')"> B</button>
+    <button class="button p1card13" id="player1card13" onclick="disableButton(this, '13')"> B</button>
+    <button class="button p1card14" id="player1pass" onclick="disableButton(this, '61')"> P</button>
+    <div class="footer" id = "player1-footer">Footer Text</div>
+  </div>
+  <div class="box right-middle-box">
+    <div class="header" id="player2-header">Player 2</div>
+    <button class="button p1card1" id="player2card1" onclick="disableButton(this, '14')"> B</button>
+    <button class="button p1card2" id="player2card2" onclick="disableButton(this, '15')"> B</button>
+    <button class="button p1card3" id="player2card3" onclick="disableButton(this, '16')"> B</button>
+    <button class="button p1card4" id="player2card4" onclick="disableButton(this, '17')"> B</button>
+    <button class="button p1card5" id="player2card5" onclick="disableButton(this, '18')"> B</button>
+    <button class="button p1card6" id="player2card6" onclick="disableButton(this, '19')"> B</button>
+    <button class="button p1card7" id="player2card7" onclick="disableButton(this, '20')"> B</button>
+    <button class="button p1card8" id="player2card8" onclick="disableButton(this, '21')"> B</button> 
+    <button class="button p1card9" id="player2card9" onclick="disableButton(this, '22')"> B</button> 
+    <button class="button p1card10" id="player2card10" onclick="disableButton(this, '23')"> B</button>
+    <button class="button p1card11" id="player2card11" onclick="disableButton(this, '24')"> B</button>
+    <button class="button p1card12" id="player2card12" onclick="disableButton(this, '25')"> B</button>
+    <button class="button p1card13" id="player2card13" onclick="disableButton(this, '26')"> B</button>
+    <button class="button p1card14" id="player2pass" onclick="disableButton(this, '62')"> P</button>
+    <div class="footer" id = "player2-footer">Footer Text</div>
+  </div>
+  <div class="box bottom-middle-box">
+    <div class="header" id="player3-header">Player 3</div>
+    <button class="button p1card1" id="player3card1" onclick="disableButton(this, '27')"> B</button>
+    <button class="button p1card2" id="player3card2" onclick="disableButton(this, '28')"> B</button>
+    <button class="button p1card3" id="player3card3" onclick="disableButton(this, '29')"> B</button>
+    <button class="button p1card4" id="player3card4" onclick="disableButton(this, '30')"> B</button>
+    <button class="button p1card5" id="player3card5" onclick="disableButton(this, '31')"> B</button>
+    <button class="button p1card6" id="player3card6" onclick="disableButton(this, '32')"> B</button>
+    <button class="button p1card7" id="player3card7" onclick="disableButton(this, '33')"> B</button>
+    <button class="button p1card8" id="player3card8" onclick="disableButton(this, '34')"> B</button> 
+    <button class="button p1card9" id="player3card9" onclick="disableButton(this, '35')"> B</button> 
+    <button class="button p1card10" id="player3card10" onclick="disableButton(this, '36')"> B</button>
+    <button class="button p1card11" id="player3card11" onclick="disableButton(this, '37')"> B</button>
+    <button class="button p1card12" id="player3card12" onclick="disableButton(this, '38')"> B</button>
+    <button class="button p1card13" id="player3card13" onclick="disableButton(this, '39')"> B</button>
+    <button class="button p1card14" id="player3pass" onclick="disableButton(this, '63')"> P</button>
+    <div class="footer" id = "player3-footer">Footer Text</div>
+  </div>
+  <div class="box left-middle-box">
+    <div class="header" id="player4-header">Player 4</div>
+    <button class="button p1card1" id="player4card1" onclick="disableButton(this, '40')"> B</button>
+    <button class="button p1card2" id="player4card2" onclick="disableButton(this, '41')"> B</button>
+    <button class="button p1card3" id="player4card3" onclick="disableButton(this, '42')"> B</button>
+    <button class="button p1card4" id="player4card4" onclick="disableButton(this, '43')"> B</button>
+    <button class="button p1card5" id="player4card5" onclick="disableButton(this, '44')"> B</button>
+    <button class="button p1card6" id="player4card6" onclick="disableButton(this, '45')"> B</button>
+    <button class="button p1card7" id="player4card7" onclick="disableButton(this, '46')"> B</button>
+    <button class="button p1card8" id="player4card8" onclick="disableButton(this, '47')"> B</button> 
+    <button class="button p1card9" id="player4card9" onclick="disableButton(this, '48')"> B</button> 
+    <button class="button p1card10" id="player4card10" onclick="disableButton(this, '49')"> B</button>
+    <button class="button p1card11" id="player4card11" onclick="disableButton(this, '50')"> B</button>
+    <button class="button p1card12" id="player4card12" onclick="disableButton(this, '51')"> B</button>
+    <button class="button p1card13" id="player4card13" onclick="disableButton(this, '52')"> B</button>
+    <button class="button p1card14" id="player4pass" onclick="disableButton(this, '64')"> P</button>
+    <div class="footer" id = "player4-footer">Footer Text</div>
+  </div>
+  <div class="bottom-left-box"> 
+    <button class="bigbutton p1card1" id="redeal-button" onclick="disableButton(this, '65')" style="background-color: lightgreen;   font-size: 36px; padding: 10px 20px">Deal</button>
+  <!--  <button class="button p1card2" id="updateAllCards" onclick="disableButton(this, '0')">Play</button>
+    <button class="button p1card3" id="backConfiguration" onclick="disableButton(this, '70')"> Cfg</button>
+    <button class="button p1card8" id="helpbutton"> Help</button>
+    <div id="help-message" style="max-width: 200px;">
+    </div>
+    <div id="message-container"></div>
+  </div> -->
+  </div>
+  <div class = "box topRightBox">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+
+  <audio id="sound">
+    <source src="/audio.mp3" type="audio/mpeg">
+  </audio>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="heartseven.js"></script>
+<!--  <script type="module" src="./heartseven.js"></script> <!-- Ensure the correct path 
+/*         <p>The object of the game is to finish all cards in a player's hand. 
+  The first card allowed to be played is 7♥. A new suit is allowed 
+  only by playing the corresponding 7. A highlighted player must play 
+  a card adjacent to any card on the table or pass. Play button can
+  be clicked any time during the play to auto-continue the game.
+  The policy for play can be selected with the policy button.
+  Click play multiple times to become familiar with the game.
+  Click help again to close the help window. 
+</p> -->
+
+</body>
+</html>

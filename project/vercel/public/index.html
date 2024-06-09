@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My HTML App</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Align items in the center vertically */
+      height: 100vh; /* Full viewport height to help with centering */
+    }
+    .image, .text {
+      width: 50%; /* Each takes up 50% of the container width */
+    }
+    .text {
+      padding-left: 20px; /* Space between the image and the text */
+      text-align: center; /* Center the text inside the text block */
+    }
+    .text p {
+      font-size: 36px; /* Increase the font size */
+    }
+    h1 {
+      text-align: center; /* Center the heading */
+      margin-bottom: 20px; /* Add some space below the heading */
+    }
+    button {
+      background-color: lightgreen;
+      font-size: 36px; /* Font size of the button text */
+      padding: 10px 20px; /* Size of the button */
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Online HeartSeven</h1>
+  
+  <!-- Container to hold the image and text block -->
+  <div class="container">
+    <img src="myImage.jpg" alt="Description of the image" class="image" style="width:50%;height:auto;">
+    <div class="text">
+      <p>If you are ready to start, click the button below:</p>
+      <!-- Change the button's onclick behavior -->
+      <button onclick="openNewPage()">Open Next Page</button>
+    </div>
+  </div>
+
+  <script>
+    function openNewPage() {
+      // Navigate to the new-page route
+      window.location.href = '/new-page';
+    }
+  </script>
+</body>
+</html>
+
