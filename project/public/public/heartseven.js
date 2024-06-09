@@ -107,16 +107,20 @@ function calcPlayerPoints(carddata) {
       console.log('Client is connecting to a remote server.');
       runningLocally = false;
     }
-
+    console.log('Client is connecting to a remote server.', window.location.origin);
     // Determine the base URL to use based on the environment
   // const baseUrl = runningLocally ? 'http://localhost:8080' : 'https://zpekpk8jsx.us-east-2.awsapprunner.com';
     // Construct the URLs for API calls
   // const cardsUrl = baseUrl + `/cards`;
   // const updateCardsUrl = baseUrl + `/update_all_cards/${requestTableIndex}`;
-  const baseUrl = runningLocally ? 'http://localhost:3000' : '*';
-  const cardsUrl = baseUrl + `/api/cards`;
+
+//  const baseUrl = runningLocally ? 'http://localhost:3000' : 'process.env.BASE_URL';
+const baseUrl = runningLocally ? 'http://localhost:3000' : window.location.origin;
+const cardsUrl = baseUrl + `/api/cards`;
   const updateCardsUrl = `${baseUrl}/api/update_all_cards`
   const trialPostUrl = `${baseUrl}/api/trialpost`;
+  console.log('Client is connecting to a remote server.', updateCardsUrl);
+  const socket = io.connect(baseUrl);
   function disableButton(button, data) {
     // Disable the button to prevent double-clicking
        var myCurrentPolicy = 0;  // Corrected the variable name to match the one used later
@@ -405,8 +409,7 @@ if (carddata.slice(0, 13).every(value => value === 0)) {
   
   }
 
-// Connect to the server
-const socket = io.connect(baseUrl);
+
 // Listen for the connect event
 
 socket.on('connect', () => {
