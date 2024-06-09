@@ -1,5 +1,5 @@
 {
-    "name": "HeartSeven",
+    "name": "heartseven",
     "version": "1.0.0",
     "description": "Cardgame HeartSeven ",
     "main": "index.js",
@@ -11,9 +11,11 @@
     "author": "Your Name",
     "license": "MIT",
     "dependencies": {
-        "express": "^4.17.1",
+        "cors": "^2.8.5",
+        "express": "^4.19.2",
         "morgan": "^1.10.0",
-        "socket.io": "^4.7.5"
+        "socket.io": "^4.7.5",
+        "socket.io-client": "^4.7.5"
     },
     "devDependencies": {
         "express-list-endpoints": "^7.1.0",
